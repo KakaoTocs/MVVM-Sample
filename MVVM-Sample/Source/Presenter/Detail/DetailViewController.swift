@@ -30,9 +30,18 @@ final class DetailViewController: BaseVC {
         view.backgroundColor = .white
         
         viewHolderConfigure()
+        configureUI()
         
         bindOutput()
         bindInput()
+        
+        viewModel.action = .viewDidLoad
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        viewModel.action = .viewDidAppear
     }
     
     // MARK: - Private Method
@@ -45,5 +54,9 @@ final class DetailViewController: BaseVC {
                 self?.viewHolder.numberLabel.text = text
             }
             .store(in: &cancellables)
+    }
+    
+    private func configureUI() {
+        view.backgroundColor = .white
     }
 }

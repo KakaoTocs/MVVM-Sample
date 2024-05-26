@@ -31,6 +31,7 @@ final class MainViewController: BaseVC {
         super.viewDidLoad()
         
         viewHolderConfigure()
+        configureUI()
         
         bindOutput()
         bindAction()
@@ -63,5 +64,9 @@ final class MainViewController: BaseVC {
                 self?.viewHolder.numberLabel.text = text
             })
             .store(in: &cancelBag)
+    }
+    
+    func configureUI() {
+        view.backgroundColor = .white
     }
 }

@@ -19,7 +19,9 @@ extension DetailViewModel {
         let number: Int
     }
     
-    struct Action {
+    enum Action {
+        case viewDidLoad
+        case viewDidAppear
     }
     
     struct Output {
@@ -48,9 +50,27 @@ final class DetailViewModel: ViewModelProtocol {
     }
     
     func bindAction() {
+        $action
+            .compactMap({ $0 })
+            .sink { [weak self] action in
+                self?.processAction(action)
+            }
+            .store(in: &cancellables)
     }
     
     func bindOutput() {
-        output.number.send("\(payload.number)")
+    }
+    
+    private func processAction(_ action: Action) {
+        switch action {
+        case .viewDidLoad:
+            output.number.send("\(payload.number)")
+        case .viewDidAppear:
+            request()
+        }
+    }
+    
+    private func request() {
+        dependency.apiService.request()
     }
 }

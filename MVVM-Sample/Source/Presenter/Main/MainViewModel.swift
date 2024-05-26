@@ -54,8 +54,8 @@ final class MainViewModel: ViewModelProtocol {
     
     func bindAction() {
         $action
+            .compactMap({ $0 })
             .sink { [weak self] action in
-                guard let action else { return }
                 self?.processAction(action)
             }
             .store(in: &cancellables)
